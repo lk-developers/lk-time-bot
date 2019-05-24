@@ -1,7 +1,8 @@
 # lk-time-bot
  A bot that enables Sri Lankan clock channel in your Discord.
  
- ##Commands
+ Commands
  
- -lkclock setup Setup the channels
- -lkclock start
+ -lkclock setup - Setup the channels
+ 
+ -lkclock start - Start the Time
