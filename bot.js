@@ -23,11 +23,16 @@ client.on("message", message => {
     }
 });
 
-// when bot is ready update current channels
+// when bot is ready, update time on current guilds
 client.on("ready", () => {
     client.guilds.forEach(guild => {
         Time.start(guild);
     });
+});
+
+// when bot is added to a new server, create a time channel
+client.on("guildCreate", (guild) => {
+    Channel.createChannel(guild);
 });
 
 // login to client

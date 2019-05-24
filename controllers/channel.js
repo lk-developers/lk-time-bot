@@ -1,4 +1,5 @@
 const Config = require("../config/config.json");
+const Time = require("./time");
 
 const createChannel = (guild) => {
     if (!checkChannel(guild)) {
@@ -18,7 +19,7 @@ const createChannel = (guild) => {
                     CONNECT: false,
                 }).then(() => {
                     console.log(`{lk-time} Permission updated!.`);
-
+                    Time.start(guild);
                 }).catch((err) => {
                     console.log(`{lk-time} Permission update failed!. ${err}`);
                 });
