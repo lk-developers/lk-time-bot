@@ -1,8 +1,7 @@
 const Config = require("../config/config.json");
 
-const createChannel = (message) => {
-    if (!checkChannel(message)) {
-        const guild = message.guild;
+const createChannel = (guild) => {
+    if (!checkChannel(guild)) {
         // create category
         guild.createChannel(Config.CAT_NAME, {
             type: "category"
@@ -35,8 +34,8 @@ const createChannel = (message) => {
 };
 
 // check channel cat exists
-const checkChannel = (message) => {
-    return message.guild.channels.find(channel => {
+const checkChannel = (guild) => {
+    return guild.channels.find(channel => {
         return channel.parent && channel.parent.name === Config.CAT_NAME;
     });
 };

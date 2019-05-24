@@ -14,13 +14,20 @@ client.on("message", message => {
         // do relevent action to that command
         switch (command) {
             case "setup":
-                Channel.createChannel(message);
+                Channel.createChannel(message.guild);
                 break;
             case "start":
-                Time.start(message);
+                Time.start(message.guild);
                 break;
         }
     }
+});
+
+// when bot is ready update current channels
+client.on("ready", () => {
+    client.guilds.forEach(guild => {
+        Time.start(guild);
+    });
 });
 
 // login to client
