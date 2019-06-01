@@ -28,6 +28,9 @@ client.on("ready", () => {
     client.guilds.forEach(guild => {
         Time.start(guild);
     });
+
+    // status
+    client.user.setActivity(`Serving ${client.guilds.size} servers | By ipmanlk@LKDevelopers🇱🇰`);
 });
 
 // when bot is added to a new server, create a time channel
