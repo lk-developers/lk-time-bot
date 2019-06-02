@@ -14,7 +14,7 @@ client.on("message", message => {
         // do relevent action to that command
         switch (command) {
             case "setup":
-                Channel.createChannel(message.guild);
+                Channel.create(message.guild);
                 break;
             case "start":
                 Time.start(message.guild);
@@ -29,14 +29,19 @@ client.on("ready", () => {
         Time.start(guild);
     });
 
-    // status
-    client.user.setActivity(`Serving ${client.guilds.size} servers | By ipmanlk@LKDevelopers🇱🇰`);
+    // activity
+    updateActivity();
 });
 
 // when bot is added to a new server, create a time channel
 client.on("guildCreate", (guild) => {
-    Channel.createChannel(guild);
+    Channel.create(guild);
+    updateActivity();
 });
+
+const updateActivity = () => {
+    client.user.setActivity(`Serving ${client.guilds.size} servers | By ipmanlk@LKDevelopers🇱🇰`);
+};
 
 // login to client
 client.login(Config.BOT_TOKEN);
