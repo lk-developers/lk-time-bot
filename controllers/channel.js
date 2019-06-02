@@ -1,37 +1,60 @@
 const Config = require("../config/config.json");
 const Time = require("./time");
 
-const createChannel = (guild) => {
-    if (!checkChannel(guild)) {
-        // create category
-        guild.createChannel(Config.CAT_NAME, {
-            type: "category"
-        }).then((category) => {
-            console.log(`${Config.CAT_NAME} Category created!.`);
-            // create voice channel
-            guild.createChannel("lk-time", {
-                type: "voice",
-                parent: category
-            }).then(() => {
-                console.log(`{lk-time} Voice channel created!.`);
-                // update permission
-                category.overwritePermissions(getRole(guild, "@everyone"), {
-                    CONNECT: false,
-                }).then(() => {
-                    console.log(`{lk-time} Permission updated!.`);
-                    Time.start(guild);
-                }).catch((err) => {
-                    console.log(`{lk-time} Permission update failed!. ${err}`);
-                });
-
-            }).catch((err) => {
-                console.log(`{lk-time} Voice channel creation failed!. ${err}`);
-            });
-
-        }).catch((err) => {
-            console.log(`${Config.CAT_NAME} Category creation failed!. ${err}`);
-        });
+const create = async (guild) => {
+    try {
+        // check if channel already exist
+        if (checkChannel(guild)) {
+            Time.start(guild);
+            return;
+        }
+        // else create 
+        const category = await createCategory(guild);
+        if (category) {
+            console.log(`{${guild.name}} ${Config.CAT_NAME} Category created!.`);
+    
+            const channel = await createChannel(guild, category);
+            if (channel) {
+                console.log(`{${guild.name}} Voice channel created!.`);
+    
+                const perms = await setCategoryPerms(guild, category);
+                if (perms) {
+                    console.log(`{${guild.name}} Permission updated!.`);
+                } else {
+                    console.log(`{${guild.name}} Permission update failed!.`);
+                }
+            } else {
+                console.log(`{${guild.name}} Voice channel creation failed!.`);
+            }
+        } else {
+            console.log(`{${guild.name}} ${Config.CAT_NAME} Category creation failed!.`);
+        }
+    } catch (err) {
+        console.log(err);
     }
+};
+
+// create category
+const createCategory = (guild) => {
+    return guild.createChannel(Config.CAT_NAME, {
+        type: "category",
+        position: 1
+    });
+};
+
+// create channel
+const createChannel = (guild, category) => {
+    return guild.createChannel("lk-time", {
+        type: "voice",
+        parent: category
+    });
+};
+
+// set category permissions
+const setCategoryPerms = (guild, category) => {
+    return category.overwritePermissions(getRole(guild, "@everyone"), {
+        CONNECT: false,
+    });
 };
 
 // check channel cat exists
@@ -47,5 +70,5 @@ const getRole = (guild, roleName) => {
 };
 
 module.exports = {
-    createChannel
+    create
 };
