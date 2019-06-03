@@ -10,25 +10,16 @@ const create = async (guild) => {
         }
         // else create 
         const category = await createCategory(guild);
-        if (category) {
-            console.log(`{${guild.name}} ${Config.CAT_NAME} Category created!.`);
+        console.log(`{${guild.name}} ${Config.CAT_NAME} Category created!.`);
     
-            const channel = await createChannel(guild, category);
-            if (channel) {
-                console.log(`{${guild.name}} Voice channel created!.`);
-    
-                const perms = await setCategoryPerms(guild, category);
-                if (perms) {
-                    console.log(`{${guild.name}} Permission updated!.`);
-                } else {
-                    console.log(`{${guild.name}} Permission update failed!.`);
-                }
-            } else {
-                console.log(`{${guild.name}} Voice channel creation failed!.`);
-            }
-        } else {
-            console.log(`{${guild.name}} ${Config.CAT_NAME} Category creation failed!.`);
-        }
+        await createChannel(guild, category);
+        console.log(`{${guild.name}} Voice channel created!.`);
+
+        await setCategoryPerms(guild, category);
+        console.log(`{${guild.name}} Permission updated!.`);
+
+        // start the clock
+        Time.start(guild);
     } catch (err) {
         console.log(err);
     }
