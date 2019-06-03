@@ -14,7 +14,7 @@ client.on("message", message => {
         // do relevent action to that command
         switch (command) {
             case "setup":
-                Channel.create(message.guild);
+                Channel.create(message.guild).catch(error => console.log(error));
                 break;
             case "start":
                 Time.start(message.guild);
