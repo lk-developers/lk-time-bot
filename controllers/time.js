@@ -9,18 +9,19 @@ const start = (guild) => {
 
     if (timeChannel) {
         // update it initially
-        update(timeChannel);
+        update(timeChannel).catch(error => console.log(error));
+    
         // start timer to update it every 20000ms
         setInterval(() => {
-            update(timeChannel);
+            update(timeChannel).catch(error => console.log(error));
         }, 20000);
     }
 };
 
-const update = (channel) => {
+const update = async(channel) => {
     let time = Moment().tz("Asia/Colombo").format("hh:mm A");
-    channel.setName(`🕒 ${time}`);
-    // console.log(`Time updated to : ${time}`);
+    let updatedChannel = await channel.setName(`🕒 ${time}`);
+    return updatedChannel;
 };
 
 module.exports = {
