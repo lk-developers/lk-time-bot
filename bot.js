@@ -6,6 +6,11 @@ const Time = require("./controllers/time");
 const client = new DiscordJs.Client();
 
 client.on("message", message => {
+    // check if user has admin perms
+    if (!(message.member && message.member.hasPermission("ADMINISTRATOR"))) {
+        return;
+    }
+
     const msgTxt = message.content;
     // check msg start with prefix
     if (msgTxt.startsWith(Config.BOT_PREFIX)) {
