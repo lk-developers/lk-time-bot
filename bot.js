@@ -45,8 +45,9 @@ client.on("guildCreate", (guild) => {
 });
 
 // when bot is removed from a server, update activity
-client.on("guildDelete", () => {
+client.on("guildDelete", (guild) => {
     updateActivity();
+    Time.stop(guild);
 });
 
 const updateActivity = () => {
