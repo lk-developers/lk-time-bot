@@ -23,3 +23,7 @@ A bot that enables Sri Lankan clock channel in your Discord.
 <a href="https://www.patreon.com/ipmanlk">
     <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png">
   </a>
+  
+  <a href="https://discord.gg/2PeSHh4">
+    <img src="http://lucasmclerie.com/images/join_our_discord.png">
+  </a>
