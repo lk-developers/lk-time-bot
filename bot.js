@@ -14,16 +14,25 @@ client.on("message", message => {
     const msgTxt = message.content;
     // check msg start with prefix
     if (msgTxt.startsWith(Config.BOT_PREFIX)) {
-        // get command from prefix
-        const command = msgTxt.split(" ")[1].toLowerCase().trim();
-        // do relevent action to that command
-        switch (command) {
-            case "setup":
-                Channel.create(message.guild).catch(error => console.log(error));
-                break;
-            case "start":
-                Time.start(message.guild);
-                break;
+
+        // check if command exists
+        if (msgTxt.split(" ")[1]) {
+            // get command from prefix
+            const command = msgTxt.split(" ")[1].toLowerCase().trim();
+            // do relevent action to that command
+            switch (command) {
+                case "setup":
+                    Channel.create(message.guild).catch(error => console.log(error));
+                    message.reply("Setting up the bot channel.");
+                    break;
+                case "start":
+                    Time.start(message.guild);
+                    message.reply("Starting the bot channel.");
+                    break;
+                default:
+                    message.reply("I don't know that command boi.");
+            }
+            message.delete(1000);
         }
     }
 });
