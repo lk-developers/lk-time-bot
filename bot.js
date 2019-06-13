@@ -11,6 +11,16 @@ client.on("message", message => {
         return;
     }
 
+    // handle msg
+    try {
+        handleMessage(message);
+    } catch (error) {
+        console.log(error);
+    }
+
+});
+
+const handleMessage = (message) => {
     const msgTxt = message.content;
     // check msg start with prefix
     if (msgTxt.startsWith(Config.BOT_PREFIX)) {
@@ -35,7 +45,7 @@ client.on("message", message => {
             message.delete(1000);
         }
     }
-});
+};
 
 // when bot is ready, update time on current guilds
 client.on("ready", () => {
