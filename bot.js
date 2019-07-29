@@ -2,7 +2,7 @@ const DiscordJs = require("discord.js");
 const Channel = require("./controllers/channel");
 const Config = require("./config/config.json");
 const Time = require("./controllers/time");
-
+const DevLog = require("./libs/lkDevLog");
 const client = new DiscordJs.Client();
 
 client.on("message", message => {
@@ -51,6 +51,7 @@ const handleMessage = (message) => {
 client.on("ready", () => {
     client.guilds.forEach(guild => {
         Time.start(guild);
+        DevLog.postLog(client, `**{${guild.name}}:** LKTime Started!.`);
     });
 
     // activity
@@ -61,12 +62,14 @@ client.on("ready", () => {
 client.on("guildCreate", (guild) => {
     Channel.create(guild);
     updateActivity();
+    DevLog.postLog(client, `**{${guild.name}}:** LKTime Joined!.`);
 });
 
 // when bot is removed from a server, update activity
 client.on("guildDelete", (guild) => {
     updateActivity();
     Time.stop(guild);
+    DevLog.postLog(client, `**{${guild.name}}:** LKTime Left!.`);
 });
 
 const updateActivity = () => {
