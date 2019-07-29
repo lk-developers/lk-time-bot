@@ -17,10 +17,10 @@ const start = (guild) => {
         update(timeChannel).catch(error => console.log(error));
 
         // start timer to update it every 20000ms
-        intervals[guild] = setInterval(() => {
+        intervals[guild.id] = setInterval(() => {
             update(timeChannel).catch(error => console.log(error));
         }, 20000);
-    }    
+    }       
 };
 
 // update time
@@ -32,8 +32,8 @@ const update = async (channel) => {
 
 // delete interval on leaving a guild
 const stop = (guild) => {
-    clearInterval(intervals[guild]);
-    delete intervals[guild];
+    clearInterval(intervals[guild.id]);
+    delete intervals[guild.id];
 };
 
 module.exports = {
