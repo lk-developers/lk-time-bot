@@ -18,8 +18,3 @@ A bot that enables Sri Lankan clock channel in your Discord.
  `-lkclock start` - **Start the Time**
 
 ***Use these commands only if the bot failed to create a time channel automatically.***
-
-
-<a href="https://www.patreon.com/ipmanlk">
-    <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png">
-  </a>
