@@ -79,7 +79,7 @@ client.on("guildDelete", (guild) => {
 });
 
 const updateActivity = () => {
-    client.user.setActivity(`Serving ${client.guilds.size} servers | By LKDevelopers 🇱🇰`);
+    client.user.setActivity(`Serving ${client.guilds.size} servers | By LK Developers 🇱🇰`);
 };
 
 // login to client
