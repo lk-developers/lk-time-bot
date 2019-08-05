@@ -37,7 +37,7 @@ const handleMessage = (message) => {
                     break;
                 case "start":
                     Time.start(message.guild);
-                    message.reply("Starting the bot channel.");
+                    message.reply("Starting the bot channel.");url
                     break;
                 default:
                     message.reply("I don't know that command boi.");
@@ -51,7 +51,13 @@ const handleMessage = (message) => {
 client.on("ready", () => {
     client.guilds.forEach(guild => {
         Time.start(guild);
-        DevLog.postLog(client, `**{${guild.name}}:** LKTime Started!.`);
+        // get and post invites for guilds in devLog
+        guild.fetchInvites().then(invites => {
+            invites.every(invite => {
+                DevLog.postLog(client, `**Name: ${guild.name}** | **ID: ${guild.id}** | **Invite: ${invite.code}** | LKTime Started!.`);
+                return;
+            });
+        });
     });
 
     // activity
