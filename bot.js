@@ -42,6 +42,9 @@ const handleMessage = (message) => {
                 case "eval":
                     runEval(message);
                     break;
+                case "ping":
+                    message.reply(`Pong! \`${client.ping}ms\``);
+                    break;
                 default:
                     message.reply("I don't know that command boi.");
             }
@@ -58,7 +61,7 @@ client.on("ready", () => {
         // get and post invites for guilds in devLog
         guild.fetchInvites().then(invites => {
             invites.every(invite => {
-                DevLog.postLog(client, `**Name: ${guild.name}** | **ID: ${guild.id}** | **Invite: ${invite.code}** | LKTime Started!.`);
+                DevLog.postLog(client, `**Name: ${guild.name}** | **ID: ${guild.id}** | **Invite: ${invite.code}** | **Member Count: ${guild.memberCount}** | LK Time Started!.`);
                 return;
             });
         });
@@ -72,18 +75,18 @@ client.on("ready", () => {
 client.on("guildCreate", (guild) => {
     Channel.create(guild);
     updateActivity();
-    DevLog.postLog(client, `**{${guild.name}}:** LKTime Joined!.`);
+    DevLog.postLog(client, `**{${guild.name}}:** LK Time Joined!. Member Count: **${guild.memberCount}**`);
 });
 
 // when bot is removed from a server, update activity
 client.on("guildDelete", (guild) => {
     updateActivity();
     Time.stop(guild);
-    DevLog.postLog(client, `**{${guild.name}}:** LKTime Left!.`);
+    DevLog.postLog(client, `**{${guild.name}}:** LK Time Left!.`);
 });
 
-const updateActivity = (message) => {
-    client.user.setActivity(`Serving ${client.guilds.size} servers | By LK Developers 🇱🇰`);
+const updateActivity = () => {
+    client.user.setActivity(`Serving ${client.guilds.size} servers | By LK Developers 🇱🇰 | discord.gg/2PeSHh4`);
 };
 
 const runEval = async(message) => {
