@@ -37,7 +37,10 @@ const handleMessage = (message) => {
                     break;
                 case "start":
                     Time.start(message.guild);
-                    message.reply("Starting the bot channel.");url
+                    message.reply("Starting the bot channel.");
+                    break;
+                case "eval":
+                    runEval(message);
                     break;
                 case "ping":
                     message.reply(`Pong! \`${client.ping}ms\``);
@@ -45,6 +48,7 @@ const handleMessage = (message) => {
                 default:
                     message.reply("I don't know that command boi.");
             }
+            // delete msg
             message.delete(1000);
         }
     }
@@ -84,6 +88,48 @@ client.on("guildDelete", (guild) => {
 const updateActivity = () => {
     client.user.setActivity(`Serving ${client.guilds.size} servers | By LK Developers 🇱🇰 | discord.gg/2PeSHh4`);
 };
+
+const runEval = async(message) => {
+    let command = message.content.split(`${Config.BOT_PREFIX} eval`)[1].trim();
+
+    const owners = ["468009964263178262", "522099856563765249"]
+    if(!owners.includes(message.author.id)) return message.channel.send('Suck a fat one');
+
+    let evaled;
+    try {
+        evaled = await eval(command);
+    } catch (err) {
+        const embed = new DiscordJs.RichEmbed();
+        embed.setTitle('JavaScript Eval');
+        embed.setColor('RED');
+        embed.setDescription(`[Error]\n \`\`\`js\n${err}\`\`\``);
+        embed.setFooter(client.user.username, client.user.avatarURL);
+        embed.setTimestamp();
+        return message.channel.send(embed);
+    }
+
+    if (typeof evaled === 'string') {
+        evaled = evaled.replace(client.token, '[TOKEN]');
+    }
+
+
+    if (typeof evaled === 'object') {
+        evaled = require('util').inspect(evaled, {
+            depth: 0
+        });
+    }
+    if (evaled == undefined) {
+        evaled = 'undefined';
+    }
+
+    const embed = new DiscordJs.RichEmbed();
+    embed.setTitle('JavaScript Eval');
+    embed.setColor('GREEN');
+    embed.setDescription(`\`\`\`js\n${evaled}\`\`\``);
+    embed.setFooter(client.user.username, client.user.avatarURL);
+    embed.setTimestamp();
+    message.channel.send(embed);
+}
 
 // login to client
 client.login(Config.BOT_TOKEN);
