@@ -10,16 +10,13 @@ client.on("message", message => {
     if (!(message.member && message.member.hasPermission("ADMINISTRATOR"))) {
         return;
     }
-
     // handle msg
     try {
         handleMessage(message);
     } catch (error) {
         console.log(error);
     }
-
 });
-
 const handleMessage = (message) => {
     const msgTxt = message.content;
     // check msg start with prefix
@@ -43,17 +40,12 @@ const handleMessage = (message) => {
                     runEval(message);
                     break;
                 case "ping":
-                    message.reply(`Pong! \`${client.ping}ms\``);
+                    message.reply(`Pong! \`${Math.floor(client.ping)}ms\``);
                     break;
-                default:
-                    message.reply("I don't know that command boi.");
             }
-            // delete msg
-            message.delete(1000);
         }
     }
 };
-
 // when bot is ready, update time on current guilds
 client.on("ready", () => {
     client.guilds.forEach(guild => {
@@ -66,34 +58,29 @@ client.on("ready", () => {
             });
         });
     });
-
     // activity
     updateActivity();
 });
-
 // when bot is added to a new server, create a time channel
 client.on("guildCreate", (guild) => {
     Channel.create(guild);
     updateActivity();
-    DevLog.postLog(client, `**{${guild.name}}:** LK Time Joined!. Member Count: **${guild.memberCount}**`);
+    DevLog.postLog(client, `**${client.user.username} has been added to a new server!**\n\n**Server Name:** ${guild.name}\n**Server Owner:** ${guild.owner.tag}\n**Server ID:** ${guild.id}\n**Member Count:** ${guild.memberCount}`);
 });
-
 // when bot is removed from a server, update activity
 client.on("guildDelete", (guild) => {
     updateActivity();
     Time.stop(guild);
-    DevLog.postLog(client, `**{${guild.name}}:** LK Time Left!.`);
+    DevLog.postLog(client, `**${client.user.username} has been removed from a server!**\n\n**Server Name:** ${guild.name}\n**Server Owner:** ${guild.owner.tag}\n**Server ID:** ${guild.id}\n**Member Count:** ${guild.memberCount}`);
 });
-
 const updateActivity = () => {
-    client.user.setActivity(`Serving ${client.guilds.size} servers | By LK Developers 🇱🇰 | discord.gg/2PeSHh4`);
+    client.user.setActivity(`${client.guilds.size} Servers | By LK Developers 🇱🇰 | discord.gg/2PeSHh4`, { type: 'WATCHING' });
 };
-
 const runEval = async(message) => {
     let command = message.content.split(`${Config.BOT_PREFIX} eval`)[1].trim();
 
     const owners = ["468009964263178262", "522099856563765249"]
-    if(!owners.includes(message.author.id)) return message.channel.send('Suck a fat one');
+    if(!owners.includes(message.author.id)) return;
 
     let evaled;
     try {
