@@ -65,13 +65,13 @@ client.on("ready", () => {
 client.on("guildCreate", (guild) => {
     Channel.create(guild);
     updateActivity();
-    DevLog.postLog(client, `**${client.user.username} has been added to a new server!**\n\n**Server Name:** ${guild.name}\n**Server Owner:** ${guild.owner.tag}\n**Server ID:** ${guild.id}\n**Member Count:** ${guild.memberCount}`);
+    DevLog.postLog(client, `**${client.user.username} has been added to a new server!**\n\n**Server Name:** ${guild.name}\n**Server Owner:** ${guild.owner.user.tag}\n**Server ID:** ${guild.id}\n**Member Count:** ${guild.memberCount}`);
 });
 // when bot is removed from a server, update activity
 client.on("guildDelete", (guild) => {
     updateActivity();
     Time.stop(guild);
-    DevLog.postLog(client, `**${client.user.username} has been removed from a server!**\n\n**Server Name:** ${guild.name}\n**Server Owner:** ${guild.owner.tag}\n**Server ID:** ${guild.id}\n**Member Count:** ${guild.memberCount}`);
+    DevLog.postLog(client, `**${client.user.username} has been removed from a server!**\n\n**Server Name:** ${guild.name}\n**Server Owner:** ${guild.owner.user.tag}\n**Server ID:** ${guild.id}\n**Member Count:** ${guild.memberCount}`);
 });
 const updateActivity = () => {
     client.user.setActivity(`${client.guilds.size} Servers | By LK Developers 🇱🇰 | discord.gg/2PeSHh4`, { type: 'WATCHING' });
