@@ -1,4 +1,4 @@
-# lk-time-bot
+# LK Time Bot
 A bot that enables Sri Lankan clock channel in your Discord.
 
 ## Public bot
@@ -6,7 +6,7 @@ A bot that enables Sri Lankan clock channel in your Discord.
 
 ## Setting up
 - Clone this repo using,
-`git clone https://github.com/ipmanlk/lk-time-bot.git`
+`git clone https://github.com/lk-developers/lk-time-bot.git`
 - Run `npm install` to install all dependencies.
 - Edit `config.json` file inside the config directory.
 - Run `npm start` or `node bot.js` to start the bot.
