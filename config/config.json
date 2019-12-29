@@ -1,5 +1,7 @@
 {
-    "BOT_TOKEN": "",
-    "BOT_PREFIX": "-lkclock",
-    "CAT_NAME": "TIME IN SRI LANKA"
+  "BOT_TOKEN": "",
+  "CAT_NAME": "TIME IN SRI LANKA",
+  "COMMANDS": {
+    "SETUP": "-lkclock setup"
+  }
 }
