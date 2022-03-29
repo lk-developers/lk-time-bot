@@ -1,3 +1,5 @@
+Due to recent Discord changes and limitations on how often a channel can be updated, this bot is pretty much useless now. So, I'm archiving this repository.
+
 # LK Time Bot
 A bot that enables Sri Lankan clock channel in your Discord.
 
